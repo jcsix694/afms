@@ -4,3 +4,4 @@
 - UPDATED routes location
 - ADDED Authenticate Request
 - ADDED sample UserResource
+- ADDED middleware for api to return results in json format
