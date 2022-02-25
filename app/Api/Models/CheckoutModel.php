@@ -4,7 +4,6 @@ namespace App\Api\Models;
 
 use App\Api\Core\Traits\UuidTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laravel\Sanctum\HasApiTokens;
 
 class CheckoutModel extends Authenticatable
 {

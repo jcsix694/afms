@@ -4,7 +4,6 @@ namespace App\Api\Repositories;
 
 use App\Api\Models\CheckoutModel;
 use App\Api\Requests\CreateCheckoutRequest;
-use Illuminate\Support\Facades\DB;
 
 class CheckoutRepository
 {
@@ -42,5 +41,17 @@ class CheckoutRepository
         } catch (\Exception $e) {
             throw new \Exception('Something went wrong whilst trying to create this checkout, please try again.', 500);
         }
+    }
+
+    public function queryGetByUserId(int $userId){
+        return CheckoutModel::where('user_id', $userId);
+    }
+
+    public function getByUserIdAll(int $userId){
+        return $this->queryGetByUserId($userId)->get();
+    }
+
+    public function getByUserIdPaginated(int $userId){
+        return $this->queryGetByUserId($userId)->paginate(5);
     }
 }
