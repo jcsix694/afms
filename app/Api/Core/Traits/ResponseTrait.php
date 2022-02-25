@@ -23,4 +23,12 @@ trait ResponseTrait
     public function successBulk(string $message = null, array $data = null, int $statusCode = 200) {
         return $this->jsonResponse($data, $message, $statusCode);
     }
+
+    public function accessToken(string $accessToken){
+        return response()->json([
+            'access_token' => $accessToken,
+            'token_type'    => 'Bearer',
+            'status' => 200
+        ], 200);
+    }
 }
