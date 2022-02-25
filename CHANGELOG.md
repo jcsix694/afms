@@ -9,3 +9,4 @@
 - ADDED uuid trait
 - ADDED jsonify middleware
 - UPDATED route and app providers to use new helpers
+- ADDED migrations and models for accounts
