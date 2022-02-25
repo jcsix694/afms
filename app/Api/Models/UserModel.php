@@ -3,13 +3,10 @@
 namespace App\Api\Models;
 
 use App\Api\Core\Traits\UuidTrait;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class UsersModel extends Authenticatable
+class UserModel extends Authenticatable
 {
     use HasApiTokens, UuidTrait;
 
@@ -49,9 +46,8 @@ class UsersModel extends Authenticatable
         'password',
     ];
 
-    public function accountType()
+    public function userAccount()
     {
-        return $this->hasOneThrough(AccountTypesModel::class, UserAccountsModel::class, 'user_id', 'id');
-
+        return $this->hasOne(UserAccountModel::class, 'user_id');
     }
 }

@@ -2,11 +2,12 @@
 - ADDED Laravel v8.83.2
 - ADDED Laravel Sail (MySql, Redis)
 - UPDATED routes location
-- ADDED Authenticate Request
-- ADDED sample UserResource
 - ADDED middleware for api to return results in json format
 - ADDED helpers for files, path
-- ADDED uuid trait
-- ADDED jsonify middleware
 - UPDATED route and app providers to use new helpers
+- ADDED traits uuid
+- ADDED middleware jsonify
 - ADDED migrations and models for accounts
+- ADDED requests create user
+- ADDED resources user, account types
+- ADDED create user endpoint
