@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Api\Core\Helpers\FileHelper;
+use App\Api\Core\Helpers\PathHelper;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -38,12 +40,15 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            $files = \File::allFiles(base_path('app/Api/Routes'));
+            $pathHelper = new PathHelper();
+            $fileHelper = new FileHelper();
+
+            $files = $fileHelper->getFilesFromPath($pathHelper->getRoutesPath());
 
             foreach($files as $file) {
                 Route::prefix('api/' . strtolower(pathinfo($file)['filename']))
                     ->middleware('api')
-                    ->group(base_path('app/Api/routes/') . pathinfo($file)['basename']);
+                    ->group($pathHelper->getRoutesPath() . '/' . pathinfo($file)['basename']);
             }
         });
     }
