@@ -62,4 +62,8 @@ class UsersRepository
     public function getUserByEmail($email){
         return UserModel::where('email', $email)->first();
     }
+
+    public function getUserById($id){
+        return UserModel::where('id', $id)->first();
+    }
 }
