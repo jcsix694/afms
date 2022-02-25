@@ -5,7 +5,7 @@ namespace App\Api\Models;
 use App\Api\Core\Traits\UuidTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class AccountTypesModel extends Authenticatable
+class AccountTypeModel extends Authenticatable
 {
     use UuidTrait;
 
@@ -49,4 +49,9 @@ class AccountTypesModel extends Authenticatable
         self::ADMIN,
         self::CUSTOMER
     ];
+
+    public function userAccount()
+    {
+        return $this->hasMany(UserAccountModel::class, 'account_type_id');
+    }
 }

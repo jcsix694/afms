@@ -5,7 +5,7 @@ namespace App\Api\Models;
 use App\Api\Core\Traits\UuidTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class UserAccountsModel extends Authenticatable
+class UserAccountModel extends Authenticatable
 {
     use UuidTrait;
 
@@ -31,4 +31,14 @@ class UserAccountsModel extends Authenticatable
         'user_id',
         'account_type_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(UserModel::class, 'user_id');
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(AccountTypeModel::class, 'account_type_id');
+    }
 }

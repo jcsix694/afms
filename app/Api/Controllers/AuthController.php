@@ -2,8 +2,9 @@
 
 namespace App\Api\Controllers;
 
+use App\Api\Models\UsersModel;
 use App\Api\Requests\AuthenticateRequest;
-use App\Api\Resources\UserResource;
+use App\Api\Resources\UsersResource;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -15,7 +16,6 @@ class AuthController extends BaseController
 
     public function authenticate(AuthenticateRequest $request)
     {
-        return new UserResource($request);
-        // return UserResource::collection($request);
+
     }
 }
