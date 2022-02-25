@@ -28,7 +28,6 @@ class CheckoutResource extends JsonResource
             'refundedAt' => $this->refunded_at,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
-            'user' => new UserResource($this->user),
         ];
     }
 }

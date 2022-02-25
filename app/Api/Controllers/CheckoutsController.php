@@ -9,6 +9,7 @@ use App\Api\Resources\CheckoutResource;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class CheckoutsController extends BaseController
@@ -25,6 +26,16 @@ class CheckoutsController extends BaseController
     {
         try {
             return $this->success('Created checkout', new CheckoutResource($this->checkoutRepository->create($request, $request->user()->id)));
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function get(Request $request)
+    {
+        try {
+            $checkouts = $this->checkoutRepository->getByUserIdPaginated($request->user()->id);
+            return $this->successPaginated('Returned checkouts', CheckoutResource::collection($checkouts)->response()->getData(true));
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), $e->getCode());
         }

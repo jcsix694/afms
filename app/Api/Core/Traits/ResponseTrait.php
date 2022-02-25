@@ -2,14 +2,22 @@
 
 namespace App\Api\Core\Traits;
 
+use phpDocumentor\Reflection\Types\Object_;
+use stdClass;
+
 trait ResponseTrait
 {
-    public function jsonResponse($data = null, string $messages = null, int $statusCode) {
-        return response()->json([
+    public function jsonResponse($data = null, string $messages = null, int $statusCode, $links = null, $meta = null) {
+        $array = array(
             'data' => $data,
-            'messages'    => $messages,
+            'messages' => $messages,
             'status' => $statusCode
-        ], $statusCode);
+        );
+
+        if($links) $array['links'] = $links;
+        if($meta) $array['meta'] = $meta;
+
+        return response()->json($array, $statusCode);
     }
 
     public function error(string $errorMessage, int $statusCode = 400, $data = null) {
@@ -20,8 +28,8 @@ trait ResponseTrait
         return $this->jsonResponse($data, $message, $statusCode);
     }
 
-    public function successBulk(string $message = null, array $data = null, int $statusCode = 200) {
-        return $this->jsonResponse($data, $message, $statusCode);
+    public function successPaginated(string $message = null, array $data = null, int $statusCode = 200) {
+        return $this->jsonResponse($data['data'], $message, $statusCode, $data['links'], $data['meta']);
     }
 
     public function accessToken(string $accessToken){
