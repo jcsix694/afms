@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;
 
-class AccountTypesResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,7 +19,12 @@ class AccountTypesResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'type' => $this->type,
+            'email' => $this->email,
+            'name' => $this->name,
+            'surname' => $this->surname,
+            'createdAt' => $this->created_at,
+            'updatedAt' => $this->updated_at,
+            'accountType' => new AccountTypeResource($this->userAccount->type)
         ];
     }
 }
