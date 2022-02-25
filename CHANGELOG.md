@@ -10,4 +10,5 @@
 - ADDED migrations and models for accounts
 - ADDED requests create user
 - ADDED resources user, account types
-- ADDED create user endpoint
+- ADDED create user, auth endpoint
+- ADDED Bearer Tokens

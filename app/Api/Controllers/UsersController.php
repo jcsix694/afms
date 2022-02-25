@@ -23,9 +23,9 @@ class UsersController extends BaseController
 
     public function createCustomer(CreateUserRequest $request)
     {
-        try{
+        try {
             return $this->success('Created customer', new UsersResource($this->usersRepository->createCustomer($request)));
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
            return $this->error($e->getMessage(), $e->getCode());
         }
     }
