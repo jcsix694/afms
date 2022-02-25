@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Api\Core\Middleware\Jsonify;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 class Authenticate extends Middleware
@@ -14,6 +15,9 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
+        $jsonifyMiddleware = new Jsonify();
+        $jsonifyMiddleware->setHeaders($request);
+
         if (! $request->expectsJson()) {
             return route('login');
         }

@@ -9,6 +9,7 @@ use App\Api\Resources\UsersResource;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class UsersController extends BaseController
@@ -16,7 +17,6 @@ class UsersController extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests, ResponseTrait;
 
     protected $usersRepository;
-
     function __construct() {
         $this->usersRepository = new UsersRepository();
     }
@@ -28,5 +28,9 @@ class UsersController extends BaseController
         } catch (\Exception $e) {
            return $this->error($e->getMessage(), $e->getCode());
         }
+    }
+
+    public function get(Request $request){
+        return $this->success('Returned user', new UsersResource($this->usersRepository->getUserById($request->user()->id)));
     }
 }
