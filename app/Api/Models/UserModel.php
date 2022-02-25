@@ -50,4 +50,9 @@ class UserModel extends Authenticatable
     {
         return $this->hasOne(UserAccountModel::class, 'user_id');
     }
+
+    public function checkout()
+    {
+        return $this->hasMany(CheckoutModel::class, 'user_id');
+    }
 }

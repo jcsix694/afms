@@ -10,5 +10,6 @@
 - ADDED migrations and models for accounts
 - ADDED requests create user
 - ADDED resources user, account types
-- ADDED create user, get user, auth endpoint
+- ADDED create user, get user, auth endpoint, create checkout
 - ADDED Bearer Tokens
+- ADDED Oppwa integration

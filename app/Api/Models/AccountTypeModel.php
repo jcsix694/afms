@@ -41,7 +41,7 @@ class AccountTypeModel extends Authenticatable
     ];
 
     /**
-     * Array of actions that was taken
+     * Array of types
      *
      * @var array<string>
      */
