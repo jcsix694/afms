@@ -5,6 +5,7 @@ namespace App\Api\Repositories;
 use App\Api\Core\Helpers\StatusCodeHelper;
 use App\Api\Models\CheckoutModel;
 use App\Api\Requests\CreateCheckoutRequest;
+use Carbon\Carbon;
 
 class CheckoutRepository
 {
@@ -18,7 +19,7 @@ class CheckoutRepository
     public function create(CreateCheckoutRequest $request, int $userId)
     {
         try {
-            $oppwaCheckout = $this->oppwaRepository->checkout($request);
+            $oppwaCheckout = $this->oppwaRepository->createCheckout($request);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage(), $e->getCode());
         }
@@ -54,5 +55,39 @@ class CheckoutRepository
 
     public function getByUserIdPaginated(int $userId){
         return $this->queryGetByUserId($userId)->paginate(5);
+    }
+
+    public function getById($userId, $checkoutId){
+        $checkout = $this->getByCheckoutId($userId, $checkoutId);
+
+        if(!$checkout) throw new \Exception('Checkout does not exist', StatusCodeHelper::STATUS_UNPROCESSABLE);
+
+        if($checkout->status === CheckoutModel::STATUS_PENDING){
+
+            try{
+                $oppwaCheckout = $this->oppwaRepository->getCheckout($checkoutId);
+
+                $processedCode = '?'; // To update this once access to production env
+                if(env('APP_ENV') !== 'production') $processedCode = OppwaRepository::CODE_REQUEST_PROCESSED_TEST;
+
+                if($oppwaCheckout->result->code === $processedCode){
+                    $checkout->status = CheckoutModel::STATUS_COMPLETED;
+                    $checkout->completed_at = Carbon::now();
+                }
+
+                $checkout->response_payment = json_encode($oppwaCheckout);
+
+                $checkout->refresh();
+                $checkout->save();
+            } catch (\Exception $e) {
+                throw new \Exception('Could not return information on the checkout', $e->getCode());
+            }
+        }
+
+        return $checkout;
+    }
+
+    public function getByCheckoutId($userId, $checkoutId){
+        return $this->queryGetByUserId($userId)->where('checkout_id', $checkoutId)->first();
     }
 }

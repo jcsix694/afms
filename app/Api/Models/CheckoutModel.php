@@ -47,6 +47,7 @@ class CheckoutModel extends Authenticatable
         'refunded',
         'checkout_id',
         'response',
+        'response_payment',
         'completed_at',
         'refunded_at'
     ];
