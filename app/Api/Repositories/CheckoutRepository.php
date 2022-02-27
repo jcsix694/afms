@@ -2,6 +2,7 @@
 
 namespace App\Api\Repositories;
 
+use App\Api\Core\Helpers\StatusCodeHelper;
 use App\Api\Models\CheckoutModel;
 use App\Api\Requests\CreateCheckoutRequest;
 
@@ -39,7 +40,7 @@ class CheckoutRepository
             $checkout->saveOrFail();
             return $checkout->refresh();
         } catch (\Exception $e) {
-            throw new \Exception('Something went wrong whilst trying to create this checkout, please try again.', 500);
+            throw new \Exception('Something went wrong whilst trying to create this checkout, please try again.', StatusCodeHelper::INTERNAL_SERVER_ERROR);
         }
     }
 

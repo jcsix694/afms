@@ -2,6 +2,7 @@
 
 namespace App\Api\Controllers;
 
+use App\Api\Core\Helpers\StatusCodeHelper;
 use App\Api\Core\Traits\ResponseTrait;
 use App\Api\Repositories\UsersRepository;
 use App\Api\Requests\CreateUserRequest;
@@ -24,7 +25,7 @@ class UsersController extends BaseController
     public function createCustomer(CreateUserRequest $request)
     {
         try {
-            return $this->success('Created customer', new UserResource($this->usersRepository->createCustomer($request)));
+            return $this->success('Created customer', new UserResource($this->usersRepository->createCustomer($request)), StatusCodeHelper::STATUS_CREATED);
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), $e->getCode());
         }

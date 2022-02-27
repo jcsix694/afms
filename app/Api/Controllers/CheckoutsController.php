@@ -2,6 +2,7 @@
 
 namespace App\Api\Controllers;
 
+use App\Api\Core\Helpers\StatusCodeHelper;
 use App\Api\Core\Traits\ResponseTrait;
 use App\Api\Repositories\CheckoutRepository;
 use App\Api\Requests\CreateCheckoutRequest;
@@ -25,7 +26,7 @@ class CheckoutsController extends BaseController
     public function create(CreateCheckoutRequest $request)
     {
         try {
-            return $this->success('Created checkout', new CheckoutResource($this->checkoutRepository->create($request, $request->user()->id)));
+            return $this->success('Created checkout', new CheckoutResource($this->checkoutRepository->create($request, $request->user()->id)), StatusCodeHelper::STATUS_CREATED);
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), $e->getCode());
         }

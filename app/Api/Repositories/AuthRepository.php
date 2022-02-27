@@ -2,6 +2,7 @@
 
 namespace App\Api\Repositories;
 
+use App\Api\Core\Helpers\StatusCodeHelper;
 use App\Api\Requests\AuthenticateRequest;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,9 +18,9 @@ class AuthRepository
     public function authenticate(AuthenticateRequest $data){
         $user = $this->usersRepository->getUserByEmail($data->email);
 
-        if(!$user) throw new \Exception('This user does not exist', 400);
+        if(!$user) throw new \Exception('This user does not exist', StatusCodeHelper::STATUS_NOT_FOUND);
 
-        if(!Hash::check($data->password, $user->password)) throw new \Exception('Invalid Credentials', 400);
+        if(!Hash::check($data->password, $user->password)) throw new \Exception('Invalid Credentials', StatusCodeHelper::STATUS_UNPROCESSABLE);
 
         return $user->createToken('auth_token')->plainTextToken;
     }
