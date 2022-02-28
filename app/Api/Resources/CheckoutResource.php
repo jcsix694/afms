@@ -18,6 +18,16 @@ class CheckoutResource extends JsonResource
      */
     public function toArray($request)
     {
+        if(!$this->payment){
+            $refund = null;
+        } else {
+            if(sizeof($this->payment->refund) > 0){
+                $refund = RefundResource::collection($this->payment->refund);
+            } else {
+                $refund = null;
+            }
+        }
+
         return [
             'id' => $this->checkout_id,
             'uuid' => $this->uuid,
@@ -25,7 +35,7 @@ class CheckoutResource extends JsonResource
             'reference' => $this->reference,
             'status' => $this->status,
             'payment' => new PaymentResource($this->payment),
-            'refunds' => RefundResource::collection($this->payment->refund),
+            'refunds' => $refund,
         ];
     }
 }
