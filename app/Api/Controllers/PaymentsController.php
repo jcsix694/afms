@@ -26,7 +26,7 @@ class PaymentsController extends BaseController
     public function refund(CreateRefundRequest $request)
     {
         try {
-            return $this->success('Created checkout', new CheckoutResource($this->refundRepository->create($request, $request->user()->id)), StatusCodeHelper::STATUS_CREATED);
+            return $this->success('Created refund', new CheckoutResource($this->refundRepository->create($request, $request->user()->id)), StatusCodeHelper::STATUS_CREATED);
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), $e->getCode());
         }
