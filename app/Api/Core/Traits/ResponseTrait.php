@@ -2,6 +2,7 @@
 
 namespace App\Api\Core\Traits;
 
+use App\Api\Core\Helpers\StatusCodeHelper;
 use phpDocumentor\Reflection\Types\Object_;
 use stdClass;
 
@@ -10,7 +11,7 @@ trait ResponseTrait
     public function jsonResponse($data = null, string $messages = null, int $statusCode, $links = null, $meta = null) {
         $array = array(
             'data' => $data,
-            'messages' => $messages,
+            'message' => $messages,
             'status' => $statusCode
         );
 
@@ -20,23 +21,26 @@ trait ResponseTrait
         return response()->json($array, $statusCode);
     }
 
-    public function error(string $errorMessage, int $statusCode = 400, $data = null) {
-        return $this->jsonResponse($data, $errorMessage, $statusCode);
+    public function error(string $errorMessage, int $statusCode = null) {
+        if(!$statusCode) $statusCode = StatusCodeHelper::STATUS_NOT_FOUND;
+        return $this->jsonResponse(null, $errorMessage, $statusCode);
     }
 
-    public function success(string $message = null, object $data = null, int $statusCode = 200) {
+    public function success(string $message = null, object $data = null, int $statusCode = null) {
+        if(!$statusCode) $statusCode = StatusCodeHelper::STATUS_OK;
         return $this->jsonResponse($data, $message, $statusCode);
     }
 
-    public function successPaginated(string $message = null, array $data = null, int $statusCode = 200) {
+    public function successPaginated(string $message = null, array $data = null, int $statusCode = null) {
+        if(!$statusCode) $statusCode = StatusCodeHelper::STATUS_OK;
         return $this->jsonResponse($data['data'], $message, $statusCode, $data['links'], $data['meta']);
     }
 
     public function accessToken(string $accessToken){
         return response()->json([
-            'access_token' => $accessToken,
-            'token_type'    => 'Bearer',
-            'status' => 200
-        ], 200);
+            'accessToken' => $accessToken,
+            'tokenType'    => 'Bearer',
+            'status' => StatusCodeHelper::STATUS_OK
+        ], StatusCodeHelper::STATUS_OK);
     }
 }

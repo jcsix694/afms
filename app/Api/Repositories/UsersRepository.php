@@ -2,6 +2,7 @@
 
 namespace App\Api\Repositories;
 
+use App\Api\Core\Helpers\StatusCodeHelper;
 use App\Api\Models\AccountTypeModel;
 use App\Api\Models\UserModel;
 use App\Api\Requests\CreateUserRequest;
@@ -29,13 +30,13 @@ class UsersRepository
     public function create($data)
     {
         DB::beginTransaction();
-        if($this->getUserByEmail($data->email)) throw new \Exception('The email has already been taken.', 422);
+        if($this->getUserByEmail($data->email)) throw new \Exception('The email has already been taken.', StatusCodeHelper::STATUS_UNPROCESSABLE);
 
-        if(!$data->accountType) throw new \Exception('Account type is Required', 422);
+        if(!$data->accountType) throw new \Exception('Account type is Required', StatusCodeHelper::STATUS_UNPROCESSABLE);
 
         $accountType = $this->accountTypesRepository->getByType($data->accountType);
 
-        if(!$accountType) throw new \Exception('Account type does not exist', 422);
+        if(!$accountType) throw new \Exception('Account type does not exist', StatusCodeHelper::STATUS_UNPROCESSABLE);
 
         $user = new UserModel([
             'email' => $data->email,
@@ -55,7 +56,7 @@ class UsersRepository
             return $user->refresh();
         } catch (\Exception $e) {
             DB::rollBack();
-            throw new \Exception('Something went wrong whilst trying to create this user, please try again.', 500);
+            throw new \Exception('Something went wrong whilst trying to create this user, please try again.', StatusCodeHelper::STATUS_NOT_FOUND);
         }
     }
 
