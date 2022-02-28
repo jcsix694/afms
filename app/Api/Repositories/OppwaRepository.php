@@ -11,6 +11,7 @@ class OppwaRepository
     CONST URI_VERSION = '/v1';
     CONST URI_CHECKOUTS = '/checkouts';
     CONST URI_PAYMENT = '/payment';
+    CONST URI_PAYMENTS = '/payments';
     CONST CODE_TRANSACTION_PENDING='000.200.000';
     CONST CODE_REQUEST_PROCESSED_TEST='000.100.110';
     protected $client;
@@ -49,6 +50,23 @@ class OppwaRepository
             return json_decode($this->client->request('GET', self::URI_VERSION . self::URI_CHECKOUTS . '/' . $checkoutId . self::URI_PAYMENT,[
                 'query' => [
                     'entityId' => env('OPPWA_API_ENTITY_ID'),
+                ]
+            ])->getBody()->getContents());
+        } catch (\Exception $e) {
+            $error =  Str::afterLast($e->getMessage(), 'description":"');
+            $error = Str::before($error, '"');
+            throw new \Exception($error, $e->getCode());
+        }
+    }
+
+    public function refund($paymentId, $amount){
+        try {
+            return json_decode($this->client->request('POST', self::URI_VERSION . self::URI_PAYMENTS . '/' . $paymentId, [
+                'form_params' => [
+                    'entityId' => env('OPPWA_API_ENTITY_ID'),
+                    'amount' => $amount,
+                    'currency' => 'EUR',
+                    'paymentType' => 'DB',
                 ]
             ])->getBody()->getContents());
         } catch (\Exception $e) {

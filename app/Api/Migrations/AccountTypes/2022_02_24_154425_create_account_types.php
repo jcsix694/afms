@@ -1,6 +1,6 @@
 <?php
 
-use App\Api\Models\AccountTypesModel;
+use App\Api\Models\AccountTypeModel;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,8 +21,8 @@ class CreateAccountTypes extends Migration
             $table->timestamps();
         });
 
-        foreach(AccountTypesModel::$types as $type) {
-            $accountType = new AccountTypesModel(['type' => $type]);
+        foreach(AccountTypeModel::$types as $type) {
+            $accountType = new AccountTypeModel(['type' => $type]);
             $accountType->save();
         }
     }

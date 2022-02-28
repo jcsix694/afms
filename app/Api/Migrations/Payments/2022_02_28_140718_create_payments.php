@@ -1,11 +1,10 @@
 <?php
 
-use App\Api\Models\CheckoutModel;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Checkouts extends Migration
+class CreatePayments extends Migration
 {
     /**
      * Run the migrations.
@@ -14,15 +13,14 @@ class Checkouts extends Migration
      */
     public function up()
     {
-        Schema::create('checkouts', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid');
-            $table->integer('user_id')->unsigned()->index();
-            $table->float('amount', 11, 2);
-            $table->string('reference', 255)->unique();
-            $table->enum('status',CheckoutModel::$statuses)->default(CheckoutModel::STATUS_PENDING);
-            $table->string('checkout_id')->index();
+            $table->string('payment_id')->index();
+            $table->float('amount', 11, 2)->nullable();
             $table->json('response');
+            $table->date('completed_at');
+            $table->integer('checkout_id')->unsigned()->index();
             $table->timestamps();
         });
     }
@@ -34,6 +32,6 @@ class Checkouts extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('checkouts');
+         Schema::dropIfExists('payments');
     }
 }
