@@ -52,7 +52,6 @@ class OppwaRepository
                 ]
             ])->getBody()->getContents());
         } catch (\Exception $e) {
-            dd($e->getMessage());
             $error =  Str::afterLast($e->getMessage(), 'description":"');
             $error = Str::before($error, '"');
             throw new \Exception($error, $e->getCode());

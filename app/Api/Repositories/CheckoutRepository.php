@@ -77,8 +77,8 @@ class CheckoutRepository
 
                 $checkout->response_payment = json_encode($oppwaCheckout);
 
-                $checkout->refresh();
                 $checkout->save();
+                $checkout->refresh();
             } catch (\Exception $e) {
                 throw new \Exception('Could not return information on the checkout', $e->getCode());
             }
