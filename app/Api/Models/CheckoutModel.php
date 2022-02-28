@@ -44,12 +44,8 @@ class CheckoutModel extends Authenticatable
         'amount',
         'reference',
         'status',
-        'refunded',
         'checkout_id',
         'response',
-        'response_payment',
-        'completed_at',
-        'refunded_at'
     ];
 
     /**
@@ -67,5 +63,10 @@ class CheckoutModel extends Authenticatable
     public function user()
     {
         return $this->belongsTo(UserModel::class, 'user_id');
+    }
+
+    public function payment()
+    {
+        return $this->hasOne(PaymentModel::class, 'checkout_id');
     }
 }

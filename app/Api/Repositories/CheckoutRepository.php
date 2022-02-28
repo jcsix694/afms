@@ -66,22 +66,29 @@ class CheckoutRepository
 
             try{
                 $oppwaCheckout = $this->oppwaRepository->getCheckout($checkoutId);
-
-                $processedCode = '?'; // To update this once access to production env
-                if(env('APP_ENV') !== 'production') $processedCode = OppwaRepository::CODE_REQUEST_PROCESSED_TEST;
-
-                if($oppwaCheckout->result->code === $processedCode){
-                    $checkout->status = CheckoutModel::STATUS_COMPLETED;
-                    $checkout->completed_at = Carbon::now();
-                }
-
-                $checkout->response_payment = json_encode($oppwaCheckout);
-
-                $checkout->save();
-                $checkout->refresh();
             } catch (\Exception $e) {
                 throw new \Exception('Could not return information on the checkout', $e->getCode());
             }
+
+            $processedCode = '?'; // To update this once access to production env
+            if(env('APP_ENV') !== 'production') $processedCode = OppwaRepository::CODE_REQUEST_PROCESSED_TEST;
+
+            if($oppwaCheckout->result->code !== $processedCode){
+                throw new \Exception('Checkout has not been processed!', StatusCodeHelper::STATUS_UNPROCESSABLE);
+            }
+
+            $checkout->status = CheckoutModel::STATUS_COMPLETED;
+
+            $checkout->saveOrFail();
+
+            $checkout->payment()->create([
+                'payment_id' => $oppwaCheckout->id,
+                'amount' => $oppwaCheckout->amount,
+                'response' => json_encode($oppwaCheckout),
+                'completed_at' => Carbon::now()
+            ]);
+
+            $checkout->refresh();
         }
 
         return $checkout;
