@@ -27,7 +27,17 @@ class OppwaRepository
         ]);
     }
 
-    public function createCheckout(CreateCheckoutRequest $data){
+    /**
+     * Creates a checkout in oppwa
+     *
+     * @param CreateCheckoutRequest $request
+     *
+     * @return mixed
+     *
+     * @throws \Exception
+     */
+    public function createCheckout(CreateCheckoutRequest $data)
+    {
         try {
              return json_decode($this->client->request('POST', self::URI_VERSION . self::URI_CHECKOUTS, [
                 'form_params' => [
@@ -45,7 +55,17 @@ class OppwaRepository
         }
     }
 
-    public function getCheckout(string $checkoutId){
+    /**
+     * returns a checkout from oppwa
+     *
+     * @param string $checkoutId
+     *
+     * @return mixed
+     *
+     * @throws \Exception
+     */
+    public function getCheckout(string $checkoutId)
+    {
         try {
             return json_decode($this->client->request('GET', self::URI_VERSION . self::URI_CHECKOUTS . '/' . $checkoutId . self::URI_PAYMENT,[
                 'query' => [
@@ -59,7 +79,17 @@ class OppwaRepository
         }
     }
 
-    public function refund($paymentId, $amount){
+    /**
+     * Creates a refund in oppwa
+     *
+     * @param CreateCheckoutRequest $request
+     *
+     * @return mixed
+     *
+     * @throws \Exception
+     */
+    public function refund(string $paymentId, float $amount)
+    {
         try {
             return json_decode($this->client->request('POST', self::URI_VERSION . self::URI_PAYMENTS . '/' . $paymentId, [
                 'form_params' => [

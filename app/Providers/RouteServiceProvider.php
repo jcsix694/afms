@@ -40,6 +40,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
+            // Will automatically get the routes folder and files within the path, will map these routes when a new file is added
             $pathHelper = new PathHelper();
             $fileHelper = new FileHelper();
 

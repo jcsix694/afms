@@ -22,7 +22,8 @@ class Jsonify
         return $next($request);
     }
 
-    public function setHeaders(Request $request){
+    public function setHeaders(Request $request)
+    {
         if ($request->is('api/*')) $request->headers->set('Accept', 'application/json');
     }
 }

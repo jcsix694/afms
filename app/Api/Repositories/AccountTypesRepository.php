@@ -11,7 +11,16 @@ class AccountTypesRepository
 
     }
 
-    public function getByType($type){
+    /**
+     * Returns the account type model filtered by type
+     *
+     * @param string $type
+     *
+     * @return AccountTypeModel
+     *
+     */
+    public function getByType(string $type)
+    {
         return AccountTypeModel::where('type', $type)->first();
     }
 }

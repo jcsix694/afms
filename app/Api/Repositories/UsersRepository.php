@@ -18,6 +18,15 @@ class UsersRepository
         $this->accountTypesRepository = new AccountTypesRepository();
     }
 
+    /**
+     * Creates a customer
+     *
+     * @param CreateUserRequest $request
+     *
+     * @return UserModel
+     * @throws \Exception
+     *
+     */
     public function createCustomer(CreateUserRequest $data){
         try {
             $data->accountType = AccountTypeModel::CUSTOMER;
@@ -27,6 +36,9 @@ class UsersRepository
         }
     }
 
+    /**
+     * Creates a user
+     */
     public function create($data)
     {
         DB::beginTransaction();
@@ -60,11 +72,20 @@ class UsersRepository
         }
     }
 
-    public function getUserByEmail($email){
+    /**
+     * Returns a user by email
+     *
+     */
+    public function getUserByEmail(string $email)
+    {
         return UserModel::where('email', $email)->first();
     }
 
-    public function getUserById($id){
+    /**
+     * Returns a user by id
+     *
+     */
+    public function getUserById(int $id){
         return UserModel::where('id', $id)->first();
     }
 }

@@ -25,7 +25,7 @@ class CreateCheckoutRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount' => 'required|regex:/^\d*(\.\d{2})?$/|numeric',
+            'amount' => 'required|regex:/^\d*(\.\d{2})?$/|numeric|gt:0',
             'reference' => 'required|string|min:8|max:255|unique:'. CheckoutModel::class .',reference',
         ];
     }

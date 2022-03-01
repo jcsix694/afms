@@ -10,6 +10,7 @@ use App\Api\Resources\UserResource;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -18,10 +19,20 @@ class UsersController extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests, ResponseTrait;
 
     protected $usersRepository;
+
     function __construct() {
         $this->usersRepository = new UsersRepository();
     }
 
+    /**
+     * Creates a customer
+     *
+     * @param CreateUserRequest $request
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     *
+     */
     public function createCustomer(CreateUserRequest $request)
     {
         try {
@@ -31,6 +42,15 @@ class UsersController extends BaseController
         }
     }
 
+    /**
+     * Returns a user
+     *
+     * @param CreateUserRequest $request
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     *
+     */
     public function get(Request $request){
         return $this->success('Returned user', new UserResource($request->user()));
     }

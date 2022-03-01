@@ -2,8 +2,6 @@
 
 namespace App\Api\Requests;
 
-use App\Api\Models\CheckoutModel;
-use App\Api\Models\PaymentModel;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateRefundRequest extends FormRequest
@@ -27,7 +25,7 @@ class CreateRefundRequest extends FormRequest
     {
         return [
             'paymentId' => 'required|string',
-            'amount' => 'required|regex:/^\d*(\.\d{2})?$/|numeric',
+            'amount' => 'required|regex:/^\d*(\.\d{2})?$/|numeric|gt:0',
         ];
     }
 

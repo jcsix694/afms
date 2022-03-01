@@ -15,7 +15,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
     }
 
     /**
@@ -25,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Will use the custom path helper to load migrations from the custom path
         $pathHelper = new PathHelper();
         $directories = glob($pathHelper->getMigrationsPath() . '/*' , GLOB_ONLYDIR);
         $paths = array_merge([$pathHelper->getMigrationsPath()], $directories);

@@ -15,7 +15,18 @@ class AuthRepository
         $this->usersRepository = new UsersRepository();
     }
 
-    public function authenticate(AuthenticateRequest $data){
+
+    /**
+     * Returns an plain text auth token
+     *
+     * @param AuthenticateRequest $request
+     *
+     * @return string
+     * @throws \Exception
+     *
+     */
+    public function authenticate(AuthenticateRequest $data)
+    {
         $user = $this->usersRepository->getUserByEmail($data->email);
 
         if(!$user) throw new \Exception('This user does not exist', StatusCodeHelper::STATUS_NOT_FOUND);

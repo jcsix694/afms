@@ -2,7 +2,6 @@
 
 namespace App\Api\Resources;
 
-use App\Api\Repositories\RefundRepository;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -31,7 +30,7 @@ class CheckoutResource extends JsonResource
         return [
             'id' => $this->checkout_id,
             'uuid' => $this->uuid,
-            'amount' => $this->amount,
+            'amount' => number_format($this->amount, 2, '.', ','),
             'reference' => $this->reference,
             'status' => $this->status,
             'payment' => new PaymentResource($this->payment),

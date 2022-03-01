@@ -10,6 +10,7 @@ use App\Api\Resources\CheckoutResource;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -23,6 +24,15 @@ class CheckoutsController extends BaseController
         $this->checkoutRepository = new CheckoutRepository();
     }
 
+    /**
+     * Creates a checkout for the user
+     *
+     * @param CreateCheckoutRequest $request
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     *
+     */
     public function create(CreateCheckoutRequest $request)
     {
         try {
@@ -32,6 +42,15 @@ class CheckoutsController extends BaseController
         }
     }
 
+    /**
+     * Returns all checkouts
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     *
+     */
     public function getAll(Request $request)
     {
         try {
@@ -42,7 +61,17 @@ class CheckoutsController extends BaseController
         }
     }
 
-    public function getById(Request $request, $checkoutId){
+    /**
+     * Returns a single checkout by id
+     *
+     * @param Request $request
+     * @param string $checkoutId
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     *
+     */
+    public function getById(Request $request, string $checkoutId){
         try {
             return $this->success('Returned checkout', new CheckoutResource($this->checkoutRepository->getById($request->user()->id, $checkoutId)));
         } catch (\Exception $e) {

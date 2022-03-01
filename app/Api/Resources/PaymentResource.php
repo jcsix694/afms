@@ -22,7 +22,7 @@ class PaymentResource extends JsonResource
         return [
             'id' => $this->payment_id,
             'uuid' => $this->uuid,
-            'amount' => $response->amount,
+            'amount' => number_format($response->amount, 2, '.', ','),
             'currency' => $response->currency,
             'code' => $response->result->code,
             'description' => $response->result->description,

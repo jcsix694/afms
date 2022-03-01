@@ -7,10 +7,10 @@ use App\Api\Core\Traits\ResponseTrait;
 use App\Api\Repositories\RefundRepository;
 use App\Api\Requests\CreateRefundRequest;
 use App\Api\Resources\CheckoutResource;
-use App\Api\Resources\PaymentResource;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
 
 class PaymentsController extends BaseController
@@ -23,6 +23,15 @@ class PaymentsController extends BaseController
         $this->refundRepository = new RefundRepository();
     }
 
+    /**
+     * Creates a refund for an existing payment
+     *
+     * @param CreateRefundRequest $request
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     *
+     */
     public function refund(CreateRefundRequest $request)
     {
         try {

@@ -8,6 +8,7 @@ use App\Api\Requests\AuthenticateRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
 
 class AuthController extends BaseController
@@ -20,6 +21,15 @@ class AuthController extends BaseController
         $this->authRepository = new AuthRepository();
     }
 
+    /**
+     * Returns an access token for a valid user
+     *
+     * @param AuthenticateRequest $request
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     *
+     */
     public function authenticate(AuthenticateRequest $request)
     {
         try {
