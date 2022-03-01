@@ -9,15 +9,17 @@ A finance management system.
 ## Getting started 
 1. Install prerequisites  
 2. Pull down Repository
-2. Run `$ composer install`  
-3. Copy `/.env.example` and rename to `.env`  
-4. Update DB details in `.env` to match your local setup 
-5. Run `alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'` to allow to boot up using `sail`
-6. Run `sail up` to start the project
+3. Run `$ composer install`  
+4. Run `npm install`
+5. Copy `/.env.example` and rename to `.env`  
+6. Update DB details in `.env` to match your local setup 
+7. Update OPPWA_API_URL, OPPWA_API_ENTITY_ID and OPPWA_API_ACCESS_TOKEN with the credentials in the `.env`
+8. Run `alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'` to allow to boot up using `sail`
+9. Run `sail up -d` to start the project
+10. Run migrations (See Running Migrations)
 
 ## Running Migrations
-1. Run `sail up -d` to start the project
-2. Run `sail artisan migrate:status` to check the migrations to run
+1. Run `sail artisan migrate:status` to check the migrations to run
 2. Run `sail artisan migrate` to run the migrations
 
 ## Other commands 
