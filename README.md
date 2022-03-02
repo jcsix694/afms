@@ -1,6 +1,8 @@
 # AFMS
 
-A finance management system.
+A finance management system which is integrated with OPPWA to create a checkout, payments and issue refunds. This Repository is ysing docker to allow use of Laravel & MySql
+
+For the GUI, please use the following Repository: https://github.com/jcsix694/afms-vuejs
 
 ## Prerequistes  
 - PHP v7.3.33 
@@ -26,4 +28,16 @@ A finance management system.
 - Run `sail down` to stop the project
 - Run `sail ps` to check containers that are running
 
+## Services
+- AFMS API: 80
+- MySQL: 3366
+- Redis: 6379
 
+## Endpoints
+- POST api/auth <em>(Authorizes a loging and returns a Bearer Token for the user)</em>
+- POST api/users <em>(Creates a customer)</em>
+- GET api/users/me <em>(Returns data a user using an active Bearer Token)</em>
+- POST api/checkouts <em>(Creates a checkout within OPPWA for a user with an active Bearer Token)</em>
+- GET api/checkouts <em>(Returns all the checkouts with any payments and refunds for a user with an active Bearer Token)</em>
+- GET api/checkouts/{id} <em>(Returns a single checkout by checkout id with any payments and refunds for a user with an active Bearer Token)</em>
+- POST api/payments/refund <em>(Creates a refund for a payment for a user with an active Bearer Token)</em>

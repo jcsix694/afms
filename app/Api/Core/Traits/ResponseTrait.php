@@ -3,8 +3,6 @@
 namespace App\Api\Core\Traits;
 
 use App\Api\Core\Helpers\StatusCodeHelper;
-use phpDocumentor\Reflection\Types\Object_;
-use stdClass;
 
 trait ResponseTrait
 {
