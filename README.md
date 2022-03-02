@@ -35,16 +35,16 @@ For the GUI, please use the following Repository: https://github.com/jcsix694/af
 
 ## Endpoints
 - POST api/auth
- - <em>Authorizes a loging and returns a Bearer Token for the user</em>
+    - <em>Authorizes a loging and returns a Bearer Token for the user</em>
 - POST api/users
- - <em>Creates a customer</em>
+    - <em>Creates a customer</em>
 - GET api/users/me
- - <em>Returns data a user using an active Bearer Token</em>
+    - <em>Returns data a user using an active Bearer Token</em>
 - POST api/checkouts
- - <em>Creates a checkout within OPPWA for a user with an active Bearer Token</em>
+    - <em>Creates a checkout within OPPWA for a user with an active Bearer Token</em>
 - GET api/checkouts 
- - <em>Returns all the checkouts with any payments and refunds for a user with an active Bearer Token</em>
+    - <em>Returns all the checkouts with any payments and refunds for a user with an active Bearer Token</em>
 - GET api/checkouts/{id} 
- - <em>Returns a single checkout by checkout id with any payments and refunds for a user with an active Bearer Token</em>
+    - <em>Returns a single checkout by checkout id with any payments and refunds for a user with an active Bearer Token</em>
 - POST api/payments/refund
- - <em>Creates a refund for a payment for a user with an active Bearer Token</em>
+    - <em>Creates a refund for a payment for a user with an active Bearer Token</em>
